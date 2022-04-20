@@ -1,5 +1,6 @@
 package site.metacoding.timetabletest.service;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.stereotype.Service;
@@ -25,5 +26,9 @@ public class ProfessorService {
 
     public void 교수등록(Professor professor) {
         professorRepository.save(professor);
+    }
+
+    public List<Professor> 교수목록() {
+        return professorRepository.findAll();
     }
 }
