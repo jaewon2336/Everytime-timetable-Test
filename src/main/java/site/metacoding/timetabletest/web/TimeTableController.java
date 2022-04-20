@@ -1,29 +1,30 @@
 package site.metacoding.timetabletest.web;
 
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
+import javax.servlet.http.HttpSession;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+
+import lombok.RequiredArgsConstructor;
+import site.metacoding.timetabletest.domain.user.User;
+import site.metacoding.timetabletest.service.TimetableService;
+import site.metacoding.timetabletest.web.dto.TimetableReqDto;
+
+@RequiredArgsConstructor
 @Controller
 public class TimeTableController {
 
-    @GetMapping("/admin/main")
-    public String mainAdmin() {
-        // 세션의 role 비교
-        return "/admin/main";
-    }
+    private final TimetableService timetableService;
+    private final HttpSession session;
 
-    @GetMapping("/user")
-    public String mainUser() {
-        return "/timetable";
-    }
-
-    @GetMapping("/join-form")
-    public String joinForm() {
-        return "/joinForm";
-    }
-
-    @GetMapping("/login-form")
-    public String loginForm() {
-        return "/loginForm";
+    @PostMapping("/user/{id}/timetable")
+    public ResponseEntity<?> addTimetable(@PathVariable Integer id, @RequestBody TimetableReqDto timetableReqDto) {
+        User principal = (User) session.getAttribute("principal");
+        timetableService.시간표등록(timetableReqDto, principal);
+        return new ResponseEntity<>(1, HttpStatus.OK);
     }
 }

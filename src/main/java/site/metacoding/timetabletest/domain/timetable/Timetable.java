@@ -43,7 +43,8 @@ public class Timetable {
     @JoinColumn(name = "userId")
     @ManyToOne
     private User user; // userId
-    private String grade; // 학점
+
+    private String grade; // 학점 A+
 
     @CreatedDate
     private LocalDateTime createDate;

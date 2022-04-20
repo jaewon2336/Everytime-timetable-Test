@@ -1,10 +1,15 @@
 package site.metacoding.timetabletest.web;
 
+import java.security.Principal;
+
 import javax.servlet.http.HttpSession;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
@@ -19,6 +24,25 @@ public class UserController {
     private final UserService userService;
     private final HttpSession session;
 
+    // 권한비교
+    @GetMapping("/admin/main")
+    public String mainAdmin() {
+        // 세션의 role 비교
+        return "/admin/main";
+    }
+
+    @GetMapping("/user/{id}")
+    public String mainUser(@PathVariable Integer id, Model model) {
+        model.addAttribute("userId", id);
+        return "/timetable";
+    }
+
+    // 회원가입
+    @GetMapping("/join-form")
+    public String joinForm() {
+        return "/user/joinForm";
+    }
+
     @PostMapping("/join")
     public String join(User user) {
 
@@ -30,6 +54,12 @@ public class UserController {
         return "redirect:/login-form";
     }
 
+    // 로그인
+    @GetMapping("/login-form")
+    public String loginForm() {
+        return "/user/loginForm";
+    }
+
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody User user) {
 
@@ -38,12 +68,14 @@ public class UserController {
         if (userEntity.getRole().equals("admin")) {
             userEntity.setRole("admin");
             session.setAttribute("principal", userEntity);
-            return new ResponseEntity<>(0, HttpStatus.OK);
+            // admin일 경우 관리자페이지 열어주기
+            return new ResponseEntity<>(userEntity, HttpStatus.OK);
+        } else {
+            session.setAttribute("principal", userEntity); // 세션에 저장
+            // user일 경우 테이블페이지 열어주기
+            return new ResponseEntity<>(userEntity, HttpStatus.OK);
         }
 
-        session.setAttribute("principal", userEntity); // 세션에 저장
-
-        return new ResponseEntity<>(1, HttpStatus.OK);
     }
 
 }

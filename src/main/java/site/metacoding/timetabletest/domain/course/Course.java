@@ -2,6 +2,7 @@ package site.metacoding.timetabletest.domain.course;
 
 import java.time.LocalDateTime;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EntityListeners;
 import javax.persistence.GeneratedValue;
@@ -30,14 +31,23 @@ public class Course {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
+    @Column(length = 50, nullable = false)
     private String name; // 과목명
+
+    @Column(length = 10, nullable = false)
     private Integer point; // 학점
 
     @JoinColumn(name = "professorId")
     @ManyToOne
     private Professor professor; // professorId
+
+    @Column(length = 50, nullable = true)
     private String classroom;
+
+    @Column(length = 10, nullable = false)
     private String weekday;
+
+    @Column(length = 10, nullable = false)
     private Integer time;
 
     @CreatedDate
