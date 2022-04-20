@@ -52,11 +52,11 @@
                 <form action="/admin/add-course" method="post">
                     <div class="form-group">
                         <label>강의명:</label>
-                        <input name="name" type="text" class="form-control" placeholder="강의명을 입력하세요">
+                        <input id="name" name="name" type="text" class="form-control" placeholder="강의명을 입력하세요">
                     </div>
                     <div class="form-group">
                         <label>학점:</label>
-                        <select name="point" class="form-control">
+                        <select id="point" name="point" class="form-control">
                             <option>2</option>
                             <option>3</option>
                             <option>4</option>
@@ -64,15 +64,17 @@
                     </div>
                     <div class="form-group">
                         <label>교수명:</label>
-                        <input name="professor" type="text" class="form-control" placeholder="교수명을 입력하세요">
+                        <input id="professor" name="professor" type="text" class="form-control"
+                            placeholder="교수명을 입력하세요">
                     </div>
                     <div class="form-group">
                         <label>강의실:</label>
-                        <input id="classroom" type="text" class="form-control" placeholder="강의실을 입력하세요">
+                        <input id="classroom" name="classroom" type="text" class="form-control"
+                            placeholder="강의실을 입력하세요">
                     </div>
                     <div class="form-group">
                         <label>요일:</label>
-                        <select name="weekday" class="form-control">
+                        <select id="weekday" name="weekday" class="form-control">
                             <option>월</option>
                             <option>화</option>
                             <option>수</option>
@@ -83,7 +85,7 @@
                     <div class="form-group">
                         <label>시간:</label>
                         <div class="form-row">
-                            <select name="startTime" class="form-control col-md-1 mr-4">
+                            <select id="startTime" name="startTime" class="form-control col-md-1 mr-4">
                                 <option>9</option>
                                 <option>10</option>
                                 <option>11</option>
@@ -95,7 +97,7 @@
                                 <option>17</option>
                                 <option>18</option>
                             </select>~
-                            <select name="endTime" class="form-control col-md-1 ml-4">
+                            <select id="endTime" name="endTime" class="form-control col-md-1 ml-4">
                                 <option>9</option>
                                 <option>10</option>
                                 <option>11</option>
@@ -111,8 +113,8 @@
                     </div>
 
                     <!-- Button trigger modal -->
-                    <button type="button" class="btn btn-outline-secondary btn-lg btn-block" data-toggle="modal"
-                        data-target="#staticBackdrop">등록</button>
+                    <button id="beforeModal" type="button" class="btn btn-outline-secondary btn-lg btn-block"
+                        data-toggle="modal" data-target="#staticBackdrop">등록</button>
 
                     <!-- Modal -->
                     <div class="modal fade" id="staticBackdrop" data-backdrop="static" data-keyboard="false"
@@ -120,13 +122,13 @@
                         <div class="modal-dialog">
                             <div class="modal-content">
                                 <div class="modal-header">
-                                    <h5 class="modal-title" id="staticBackdropLabel">Modal title</h5>
+                                    <h5 class="modal-title" id="staticBackdropLabel">강의를 등록하시겠습니까?</h5>
                                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                         <span aria-hidden="true">&times;</span>
                                     </button>
                                 </div>
                                 <div class="modal-body">
-                                    ...
+
                                 </div>
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-outline-secondary"
@@ -149,5 +151,35 @@
     </div>
 
 </body>
+
+<script>
+    $("#beforeModal").click(() => {
+        courseScript();
+    });
+
+    function courseScript() {
+
+        let courseDto = {
+            name: $("#name").val(),
+            point: $("#point").val(),
+            professor: $("#professor").val(),
+            classroom: $("#classroom").val(),
+            weekday: $("#weekday").val(),
+            startTime: $("#startTime").val(),
+            endTime: $("#endTime").val()
+        }
+
+        $(".modal-body").append(bodyRender(courseDto));
+    }
+
+    function bodyRender(courseDto) {
+        return `<div>강의명 : ${courseDto.name}</div>
+                <div>학점 : ${courseDto.point}</div>
+                <div>교수명 : ${courseDto.professor}</div>
+                <div>강의실 : ${courseDto.classroom}</div>
+                <div>요일 : ${courseDto.weekday}</div>
+                <div>시간 : ${courseDto.startTime}시 ~ ${courseDto.endTime}시</div>`
+    }
+</script>
 
 </html>
