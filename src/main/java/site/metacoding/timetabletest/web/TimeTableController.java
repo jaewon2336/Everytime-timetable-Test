@@ -5,10 +5,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
 public class TimeTableController {
-    @GetMapping("/admin")
+    @GetMapping("/admin/main")
     public String mainAdmin() {
         // 세션의 role 비교
-        return "/admin";
+        return "/admin/main";
     }
 
     @GetMapping("/user")
@@ -24,6 +24,21 @@ public class TimeTableController {
     @GetMapping("/login-form")
     public String loginForm() {
         return "/loginForm";
+    }
+
+    @GetMapping("/admin/course")
+    public String addCourse() {
+        return "/admin/addCourse";
+    }
+
+    @GetMapping("/admin/professor")
+    public String addProfessor() {
+        return "/admin/addProfessor";
+    }
+
+    @GetMapping("/admin/course-list")
+    public String courseList() {
+        return "/admin/courseList";
     }
 
 }

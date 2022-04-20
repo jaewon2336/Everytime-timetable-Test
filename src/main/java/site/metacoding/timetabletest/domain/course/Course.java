@@ -36,6 +36,9 @@ public class Course {
     @JoinColumn(name = "professorId")
     @ManyToOne
     private Professor professor; // professorId
+    private String classroom;
+    private String weekday;
+    private Integer time;
 
     @CreatedDate
     private LocalDateTime createDate;
