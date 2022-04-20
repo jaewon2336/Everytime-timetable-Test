@@ -61,39 +61,21 @@
                             <th scope="col">시간</th>
                         </tr>
                     </thead>
+
                     <tbody>
+                        {{#courses}}
                         <tr>
-                            <th scope="row">1</th>
-                            <td>Mark</td>
-                            <td>Otto</td>
-                            <td>@mdo</td>
-                            <td>@mdo</td>
-                            <td>@mdo</td>
-                            <td>@mdo</td>
+                            <th scope="row">{{id}}</th>
+                            <td>{{name}}</td>
+                            <td>{{point}}</td>
+                            <td>{{professor.name}}</td>
+                            <td>{{classroom}}</td>
+                            <td>{{weekday}}</td>
+                            <td>{{time}}</td>
                         </tr>
-                        <tr>
-                            <th scope="row">2</th>
-                            <td>Jacob</td>
-                            <td>Thornton</td>
-                            <td>@fat</td>
-                            <td>@fat</td>
-                            <td>@fat</td>
-                            <td>@fat</td>
-                        </tr>
-                        <tr>
-                            <th scope="row">3</th>
-                            <td>Larry</td>
-                            <td>the Bird</td>
-                            <td>@twitter</td>
-                            <td>@twitter</td>
-                            <td>@twitter</td>
-                            <td>@twitter</td>
-                        </tr>
+                        {{/courses}}
                     </tbody>
                 </table>
-
-
-
                 <br>
 
             </div>

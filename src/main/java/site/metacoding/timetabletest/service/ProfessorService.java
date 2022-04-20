@@ -22,4 +22,8 @@ public class ProfessorService {
             return null;
         }
     }
+
+    public void 교수등록(Professor professor) {
+        professorRepository.save(professor);
+    }
 }

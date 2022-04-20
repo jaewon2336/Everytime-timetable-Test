@@ -28,7 +28,6 @@ public class Professor {
     private Integer id;
 
     private String name;
-    private String profType; // 정교수 부교수 이런게 뭐지
     private String department; // 학과
 
     @CreatedDate
