@@ -1,4 +1,4 @@
-package site.metacoding.timetabletest.web.dto;
+package site.metacoding.timetabletest.web.dto.timetable;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -15,8 +15,10 @@ public class TimetableReqDto {
     private Integer userId;
     private String courseName;
     private String professorName;
-    private String day;
-    private Integer courseTime;
+    private String weekday;
+    private Integer startTime;
+    private Integer endTime;
+    private String classroom;
 
     public Timetable toEntity(Course course, Professor professor, User principal) {
         Timetable timetable = new Timetable();

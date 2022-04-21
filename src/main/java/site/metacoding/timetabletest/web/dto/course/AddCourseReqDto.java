@@ -1,4 +1,4 @@
-package site.metacoding.timetabletest.web.dto;
+package site.metacoding.timetabletest.web.dto.course;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -19,14 +19,15 @@ public class AddCourseReqDto {
     private Integer startTime;
     private Integer endTime;
 
-    public Course toEntity(Integer time, Professor professor) {
+    public Course toEntity(Professor professor) {
         Course course = new Course();
         course.setName(name);
         course.setPoint(point);
         course.setProfessor(professor);
         course.setWeekday(weekday);
         course.setClassroom(classroom);
-        course.setTime(time);
+        course.setStartTime(startTime);
+        course.setEndTime(endTime);
         return course;
     }
 

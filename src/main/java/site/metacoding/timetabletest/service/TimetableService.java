@@ -13,8 +13,8 @@ import site.metacoding.timetabletest.domain.professor.ProfessorRepository;
 import site.metacoding.timetabletest.domain.timetable.Timetable;
 import site.metacoding.timetabletest.domain.timetable.TimetableRepository;
 import site.metacoding.timetabletest.domain.user.User;
-import site.metacoding.timetabletest.web.dto.TimetableReqDto;
-import site.metacoding.timetabletest.web.dto.TimetableResDto;
+import site.metacoding.timetabletest.web.dto.timetable.TimetableReqDto;
+import site.metacoding.timetabletest.web.dto.timetable.TimetableResDto;
 
 @RequiredArgsConstructor
 @Service
@@ -42,7 +42,7 @@ public class TimetableService {
         timetableRepository.save(timetable);
     }
 
-    public TimetableResDto 시간표가져오기() {
+    public TimetableResDto 시간표만들기() {
         // course 찾고 professor 찾아서 모델에 담아주기
         List<Course> courses = courseRepository.findAll();
         List<Professor> professors = professorRepository.findAll();
@@ -51,6 +51,10 @@ public class TimetableService {
         timetableResDto.setCourses(courses);
         timetableResDto.setProfessors(professors);
         return timetableResDto;
+    }
+
+    public List<Timetable> 시간표불러오기(Integer userId) {
+        return timetableRepository.findByUserId(userId);
     }
 
 }

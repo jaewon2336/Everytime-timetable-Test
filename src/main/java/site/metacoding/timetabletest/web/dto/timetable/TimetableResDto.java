@@ -1,4 +1,4 @@
-package site.metacoding.timetabletest.web.dto;
+package site.metacoding.timetabletest.web.dto.timetable;
 
 import java.util.List;
 

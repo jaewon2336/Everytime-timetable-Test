@@ -12,7 +12,7 @@ import site.metacoding.timetabletest.domain.course.Course;
 import site.metacoding.timetabletest.domain.professor.Professor;
 import site.metacoding.timetabletest.service.CourseService;
 import site.metacoding.timetabletest.service.ProfessorService;
-import site.metacoding.timetabletest.web.dto.AddCourseReqDto;
+import site.metacoding.timetabletest.web.dto.course.AddCourseReqDto;
 
 @RequiredArgsConstructor
 @Controller
@@ -37,9 +37,8 @@ public class CourseController {
     public String addCourse(AddCourseReqDto addCourseReqDto, Model model) {
 
         Professor professorEntity = professorService.교수찾기(addCourseReqDto.getProfessor());
-        Integer time = addCourseReqDto.getEndTime() - addCourseReqDto.getStartTime();
 
-        courseService.강의등록(addCourseReqDto.toEntity(time, professorEntity));
+        courseService.강의등록(addCourseReqDto.toEntity(professorEntity));
 
         return "redirect:/admin/course-list";
     }

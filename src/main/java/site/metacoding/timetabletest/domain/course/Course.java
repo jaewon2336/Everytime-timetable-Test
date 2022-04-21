@@ -48,7 +48,10 @@ public class Course {
     private String weekday;
 
     @Column(length = 10, nullable = false)
-    private Integer time;
+    private Integer startTime;
+
+    @Column(length = 10, nullable = false)
+    private Integer endTime;
 
     @CreatedDate
     private LocalDateTime createDate;

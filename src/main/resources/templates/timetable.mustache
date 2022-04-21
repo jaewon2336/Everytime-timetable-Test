@@ -192,12 +192,21 @@
                 <div class="modal-footer">
                     <button id="saveBtn" type="button" class="btn btn-danger" data-dismiss="modal">저장</button>
                 </div>
-
+                <input id="timetables" type="hidden" value="{{timetables}}">
             </div>
         </div>
     </div>
 
     <script>
+
+        function drawTimetable() {
+            let timetables = $("#timetables").val();
+
+            timetables.forEach((timetable) => {
+                setCourse(timetable);
+            });
+        }
+
         const colors = ["red", "grey", "orange", "green", "yellow", "antiquewhite", "cornflowerblue"]
 
         $("#saveBtn").click(() => {
@@ -212,8 +221,10 @@
                 userId: $("#userId").val(),
                 courseName: $("#courseName").val(),
                 professorName: $("#professorName").val(),
-                day: $("#weekday").val(),
-                courseTime: $("#endTime").val() - $("#startTime").val()
+                weekday: $("#weekday").val(),
+                startTime: $("#startTime").val(),
+                endTime: $("#endTime").val(),
+                classroom: $("#classroom").val()
             }
 
             // 1. 해당 값 JSON.stringify(data)으로 fetch 통신해서 insert 하기 (POST 통신)
@@ -229,7 +240,8 @@
 
             // 2. 성공하면 화면 변경
             if (responseParse == 1) {
-                setCourse(data);
+                alert("성공");
+                setCourse(data)
             } else {
                 alert("실패");
             }
@@ -238,13 +250,16 @@
         function setCourse(data) {
             let num = Math.floor(Math.random() * 7); // 0~6
 
-            // 1. 과목명
-            let temp = `${data.professorName} <br/> ${data.courseName}`
-            $(`#${data.day}-${Number(data.courseTime)}`).html(temp);
+            // 1. 과목명 data.courseTime 원래는 시작시간이였음
+            let temp = `${data.professorName} <br/> ${data.courseName} <br/> ${data.classroom}`;
+            $(`#${data.weekday}-${Number(data.startTime)}`).html(temp);
+
+            let time = $("#endTime").val() - $("#startTime").val();
+            console.log(time);
 
             // 2. 색상
-            for (i = 0; i < 3; i++) {
-                $(`#${data.day}-${Number(data.courseTime) + i}`).css("background-color", colors[num]);
+            for (i = 0; i < time; i++) {
+                $(`#${data.weekday}-${Number(data.startTime) + i}`).css("background-color", colors[num]);
             }
         }
     </script>
