@@ -1,5 +1,6 @@
 package site.metacoding.timetabletest.service;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.stereotype.Service;
@@ -13,6 +14,7 @@ import site.metacoding.timetabletest.domain.timetable.Timetable;
 import site.metacoding.timetabletest.domain.timetable.TimetableRepository;
 import site.metacoding.timetabletest.domain.user.User;
 import site.metacoding.timetabletest.web.dto.TimetableReqDto;
+import site.metacoding.timetabletest.web.dto.TimetableResDto;
 
 @RequiredArgsConstructor
 @Service
@@ -38,6 +40,17 @@ public class TimetableService {
 
         Timetable timetable = timetableReqDto.toEntity(courseEntity, professorEntity, principal);
         timetableRepository.save(timetable);
-    };
+    }
+
+    public TimetableResDto 시간표가져오기() {
+        // course 찾고 professor 찾아서 모델에 담아주기
+        List<Course> courses = courseRepository.findAll();
+        List<Professor> professors = professorRepository.findAll();
+
+        TimetableResDto timetableResDto = new TimetableResDto();
+        timetableResDto.setCourses(courses);
+        timetableResDto.setProfessors(professors);
+        return timetableResDto;
+    }
 
 }

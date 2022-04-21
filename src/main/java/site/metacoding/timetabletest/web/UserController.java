@@ -31,12 +31,6 @@ public class UserController {
         return "/admin/main";
     }
 
-    @GetMapping("/user/{id}")
-    public String mainUser(@PathVariable Integer id, Model model) {
-        model.addAttribute("userId", id);
-        return "/timetable";
-    }
-
     // 회원가입
     @GetMapping("/join-form")
     public String joinForm() {

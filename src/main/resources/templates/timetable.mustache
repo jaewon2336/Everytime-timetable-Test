@@ -122,17 +122,17 @@
                         <tr>
                             <td>과목명</td>
                             <td><select id="courseName" class="form-control ml-4">
-                                    <option>C언어</option>
-                                    <option>자바</option>
-                                    <option>이산수학</option>
+                                    {{#timetableResDto.courses}}
+                                    <option>{{name}}</option>
+                                    {{/timetableResDto.courses}}
                                 </select></td>
                         </tr>
                         <tr>
                             <td>교수명</td>
                             <td><select id="professorName" class="form-control ml-4">
-                                    <option>김흥준</option>
-                                    <option>송진국</option>
-                                    <option>강창구</option>
+                                    {{#timetableResDto.professors}}
+                                    <option>{{name}}</option>
+                                    {{/timetableResDto.professors}}
                                 </select></td>
                         </tr>
                         <tr>
@@ -179,9 +179,9 @@
                             <td>장소</td>
                             <td>
                                 <select id="classroom" class="form-control ml-4">
-                                    <option>18동 PC실</option>
-                                    <option>18동 DB실</option>
-                                    <option>18동 DB실</option>
+                                    {{#timetableResDto.courses}}
+                                    <option>{{classroom}}</option>
+                                    {{/timetableResDto.courses}}
                                 </select>
                             </td>
                         </tr>
