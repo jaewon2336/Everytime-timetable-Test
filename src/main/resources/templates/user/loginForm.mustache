@@ -107,9 +107,11 @@
             if (responseParse.role === "admin") {
                 alert("관리자 페이지로 이동합니다.");
                 location.href = "/admin/main";
+
             } else if (responseParse.role === "user") {
                 alert("로그인에 성공하였습니다.");
                 location.href = "/user/" + responseParse.id;
+
             } else {
                 alert("존재하지 않는 사용자입니다.");
                 location.href = "/join-form";

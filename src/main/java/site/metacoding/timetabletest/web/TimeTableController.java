@@ -4,6 +4,10 @@ import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -37,6 +41,10 @@ public class TimeTableController {
     // 해당유저의 시간표로 이동(course, professor 담아가야함 -> timetable을 담아가야함!!)
     @GetMapping("/user/{id}")
     public String mainUser(@PathVariable Integer id, Model model) {
+        User principal = (User) session.getAttribute("principal");
+
+        model.addAttribute("userEntity", principal);
+
         // course, professor 담기
         TimetableResDto timetableResDto = timetableService.시간표만들기();
 
@@ -46,7 +54,15 @@ public class TimeTableController {
         // 유저가 가진 시간표 목록 담기
         List<Timetable> timetables = timetableService.시간표불러오기(id);
 
-        model.addAttribute("timetables", timetables);
+        ObjectMapper om = new ObjectMapper();
+        om.registerModule(new JavaTimeModule());
+
+        try {
+            String timetablesJson = om.writeValueAsString(timetables);
+            model.addAttribute("timetablesJson", timetablesJson);
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
 
         return "/timetable";
     }

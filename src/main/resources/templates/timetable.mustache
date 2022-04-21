@@ -101,7 +101,9 @@
                 </tr>
             </tbody>
         </table>
+        {{#userEntity}}
         <button class="btn btn-outline-danger" data-toggle="modal" data-target="#myModal">등록</button>
+        {{/userEntity}}
     </div>
 
 
@@ -192,22 +194,24 @@
                 <div class="modal-footer">
                     <button id="saveBtn" type="button" class="btn btn-danger" data-dismiss="modal">저장</button>
                 </div>
-                <input id="timetables" type="hidden" value="{{timetables}}">
+
+                <input id="timetablesJson" type="hidden" value="{{timetablesJson}}">
+                <!---->
             </div>
         </div>
     </div>
 
     <script>
 
-        function drawTimetable() {
-            let timetables = $("#timetables").val();
+        let timetables = JSON.parse($("#timetablesJson").val());
 
-            timetables.forEach((timetable) => {
-                setCourse(timetable);
-            });
-        }
+        console.log(timetables);
 
-        const colors = ["red", "grey", "orange", "green", "yellow", "antiquewhite", "cornflowerblue"]
+        timetables.forEach((t) => {
+            drawUserTimetable(t);
+        });
+
+        const colors = ["red", "grey", "orange", "green", "yellow", "antiquewhite", "cornflowerblue"];
 
         $("#saveBtn").click(() => {
             saveTimetable();
@@ -226,6 +230,8 @@
                 endTime: $("#endTime").val(),
                 classroom: $("#classroom").val()
             }
+
+            console.log(data);
 
             // 1. 해당 값 JSON.stringify(data)으로 fetch 통신해서 insert 하기 (POST 통신)
             let response = await fetch(`/user/${id}/timetable`, {
@@ -260,6 +266,26 @@
             // 2. 색상
             for (i = 0; i < time; i++) {
                 $(`#${data.weekday}-${Number(data.startTime) + i}`).css("background-color", colors[num]);
+            }
+        }
+
+        function drawUserTimetable(timetable) {
+            console.log("나호출됨?");
+            const colorst = ["red", "grey", "orange", "green", "yellow", "antiquewhite", "cornflowerblue"];
+            let n = Math.floor(Math.random() * 7); // 0~6
+
+            // 1. 과목명 data.courseTime 원래는 시작시간이였음
+            let temp = `${timetable.professor.name} <br/> ${timetable.course.name} <br/> ${timetable.course.classroom}`;
+            $(`#${timetable.course.weekday}-${Number(timetable.course.startTime)}`).html(temp);
+
+            let time = timetable.course.endTime - timetable.course.startTime;
+            console.log(time);
+            console.log(timetable.course.weekday);
+
+            console.log(`${timetable.course.weekday} - ${Number(timetable.course.startTime)}`);
+            // 2. 색상
+            for (i = 0; i < time; i++) {
+                $(`#${timetable.course.weekday}-${Number(timetable.course.startTime) + i}`).css("background-color", colorst[n]);
             }
         }
     </script>
